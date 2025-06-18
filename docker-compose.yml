@@ -1,0 +1,40 @@
+services:
+  star_wars_database:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_LOCAL_PORT}:${POSTGRES_PORT}"
+    restart: always
+    volumes:
+      - star_wars:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
+      timeout: 5s
+      retries: 3
+
+  star_wars_api:
+    build:
+      context: .
+      dockerfile: docker/dockerfile
+
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@star_wars_database:${POSTGRES_PORT}/${POSTGRES_DB}
+
+    volumes:
+      - ./:/app
+
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:${API_CONTAINER_PORT}"
+
+    ports:
+      - ${API_PORT}:${API_CONTAINER_PORT}
+
+
+    depends_on:
+        - star_wars_database
+
+volumes:
+  star_wars:
+    driver: local

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'universe',
     'graphene_django',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

@@ -2,22 +2,22 @@ import graphene
 from graphene import relay, ObjectType
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
-
+from graphql_relay import from_global_id
 from universe.models import Movie
+from universe.filters import MovieFilter
 
 class MovieType(DjangoObjectType):
     class Meta:
         model = Movie
         interfaces = (relay.Node, )
         fields = '__all__'
-        filter_fields = {
-            'characters__id': ['exact'],
-            'title': ['exact', 'icontains'],
-        }
+        filterset_class = MovieFilter
 
 class MovieQuery(ObjectType):
     movie = relay.Node.Field(MovieType)
-    all_movies = DjangoFilterConnectionField(MovieType)
+    all_movies = DjangoFilterConnectionField(
+        MovieType
+    )
 
 class CreateMovieMutation(relay.ClientIDMutation):
     class Input:
@@ -39,7 +39,15 @@ class CreateMovieMutation(relay.ClientIDMutation):
             producers=input.get('producers', ''),
             created_date=input.get('created_date'),
         )
-        movie.planets.set(input.get('planets', []))
-        movie.characters.set(input.get('characters', []))
+        planet_ids = [
+            from_global_id(planet)[1]
+            for planet in input.get('planets', [])
+        ]
+        character_ids = [
+            from_global_id(character)[1]
+            for character in input.get('characters', [])
+        ]
+        movie.planets.set(planet_ids)
+        movie.characters.set(character_ids)
 
         return CreateMovieMutation(movie=movie)

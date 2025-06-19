@@ -1,3 +1,3 @@
-from .character import CharacterType, CharacterQuery
 from .movie import MovieType, MovieQuery, CreateMovieMutation
-from .planet import PlanetType, PlanetQuery
+from .character import CharacterType, CharacterQuery, CreateCharacterMutation
+from .planet import PlanetType, PlanetQuery, CreatePlanetMutation

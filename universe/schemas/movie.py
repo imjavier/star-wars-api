@@ -7,19 +7,30 @@ from universe.models import Movie
 from universe.filters import MovieFilter
 
 class MovieType(DjangoObjectType):
+    """
+    Represents a movie in the Star Wars universe.
+    Includes basic information such as title, director, created date,
+    associated characters, and planets.
+    """
+
     class Meta:
         model = Movie
         interfaces = (relay.Node, )
         fields = '__all__'
         filterset_class = MovieFilter
+        description = "A Star Wars movie, containing information about its characters, planets, and creators."
 
 class MovieQuery(ObjectType):
     movie = relay.Node.Field(MovieType)
     all_movies = DjangoFilterConnectionField(
-        MovieType
+        MovieType,
+        description="List all Star Wars movies. Supports filters like title, director, and release date."
     )
 
 class CreateMovieMutation(relay.ClientIDMutation):
+    """
+    Mutation to create a new Star Wars movie.
+    """
     class Input:
         title = graphene.String(required=True)
         opening_crawl = graphene.String(required=False)

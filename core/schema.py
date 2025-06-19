@@ -1,7 +1,10 @@
 import graphene
-from universe.schemas import CharacterQuery, MovieQuery, PlanetQuery
+from universe.schemas import CharacterQuery, MovieQuery, PlanetQuery, CreateMovieMutation
 
 class Query(CharacterQuery, MovieQuery, PlanetQuery, graphene.ObjectType):
     pass
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    create_movie = CreateMovieMutation.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

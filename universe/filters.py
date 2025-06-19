@@ -3,13 +3,14 @@ from universe.models import Movie
 from helpers.filters import GlobalIDFilter
 
 class MovieFilter(FilterSet):
-    id = GlobalIDFilter()  # para permitir id global en allMovies(id: "...")
+    id = GlobalIDFilter()
 
-    characters__id = GlobalIDFilter()  # para permitir filter por character global ID
+    characters__id = GlobalIDFilter()
 
     class Meta:
         model = Movie
         fields = {
             'id': ['exact'],
             'title': ['exact', 'icontains'],
+            'characters__name': ['exact', 'icontains']
         }

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from graphene_django.views import GraphQLView
-from core.scheme import schema  # Adjust the import based on your project structure
+from core.schema import schema # Adjust the import based on your project structure
 
 urlpatterns = [
     path('admin/', admin.site.urls),

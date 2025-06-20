@@ -1,7 +1,7 @@
 import graphene
 from graphene import relay, ObjectType
-from graphene_django import DjangoObjectType, DjangoListField
-
+from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 from universe.models import Planet
 
 class PlanetType(DjangoObjectType):
@@ -13,6 +13,9 @@ class PlanetType(DjangoObjectType):
         model = Planet
         interfaces = (relay.Node, )
         fields = '__all__'
+        filter_fields = {
+            'name': ['exact', 'icontains']
+        }
         description = "A Star Wars planet, containing basic information such as its name."
 
 class PlanetQuery(ObjectType):
@@ -24,7 +27,7 @@ class PlanetQuery(ObjectType):
         PlanetType,
         description="Retrieve a planet by its global ID."
     )
-    all_planets = DjangoListField(
+    all_planets = DjangoFilterConnectionField(
         PlanetType,
         description="List all Star Wars planets. Supports filters such as name."
     )

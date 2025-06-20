@@ -161,4 +161,4 @@ Este proyecto fue desarrollado como parte del **Challenge Back-End – LQN 2025*
 
 ## 🧠 Autor
 
-Desarrollado por [Javier Villarreal] (https://www.linkedin.com/in/javier-villarreal1/)
+Desarrollado por: [Javier Villarreal](https://www.linkedin.com/in/javier-villarreal1/)

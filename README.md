@@ -74,9 +74,9 @@ API GraphQL construida con Django para crear y consultar información del univer
 
 ## 🔌 Endpoint GraphQL
 
-| Método | Endpoint        | Descripción               |
-|--------|------------------|---------------------------|
-| POST   | `/graphql/`      | Punto de entrada GraphQL |
+| Endpoint        | Descripción               |
+|-----------------|---------------------------|
+| `/graphql/`     | Punto de entrada GraphQL  |
 
 Compatible con interfaces Relay.
 

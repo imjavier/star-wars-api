@@ -21,7 +21,10 @@ class MovieType(DjangoObjectType):
         description = "A Star Wars movie, containing information about its characters, planets, and creators."
 
 class MovieQuery(ObjectType):
-    movie = relay.Node.Field(MovieType)
+    movie = relay.Node.Field(
+        MovieType,
+        description="Retrieve a movie by its global ID."
+    )
     all_movies = DjangoFilterConnectionField(
         MovieType,
         description="List all Star Wars movies. Supports filters like title, director, and release date."

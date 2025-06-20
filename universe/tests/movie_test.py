@@ -1,6 +1,5 @@
 import pytest
 from graphene.test import Client
-from universe.models import Movie
 from core.schema import schema
 
 @pytest.mark.django_db

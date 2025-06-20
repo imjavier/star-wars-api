@@ -11,7 +11,8 @@ def planet():
 @pytest.fixture
 def character():
     return Character.objects.get_or_create(
-        name="Test subject"
+        name="Test subject",
+        height=1.9
     )[0]
 
 @pytest.fixture
